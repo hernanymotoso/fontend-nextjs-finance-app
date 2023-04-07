@@ -1,5 +1,5 @@
-import "@/styles/globals.css";
-import theme from "@/utils/theme";
+import "../styles/globals.css";
+import theme from "../utils/theme";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import type { AppProps } from "next/app";
 import { useEffect } from "react";
