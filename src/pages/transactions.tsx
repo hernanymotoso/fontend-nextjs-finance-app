@@ -19,6 +19,7 @@ import {
 import { Container, Typography } from "@material-ui/core";
 import { GetServerSideProps, NextPage } from "next";
 import { Transaction } from "../utils/model";
+import { formatCellDate } from "../utils/date.helpers";
 
 interface TransactionPageProps {
   transactions: Transaction[];
@@ -28,6 +29,7 @@ const columns: Column[] = [
   {
     name: "payment_date",
     title: "Data pag.",
+    getCellValue: formatCellDate,
   },
   {
     name: "name",
@@ -44,6 +46,7 @@ const columns: Column[] = [
   {
     name: "created_at",
     title: "Criado em",
+    getCellValue: formatCellDate,
   },
 ];
 
