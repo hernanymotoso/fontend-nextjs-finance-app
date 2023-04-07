@@ -1,4 +1,4 @@
-import { http } from "../../utils/http";
+import makeHttp from "../../utils/http";
 import { Token, validateAuth } from "../../utils/auth";
 import {
   Column,
@@ -101,11 +101,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
   const token = (auth as Token).token;
-  const { data: transactions } = await http.get("transactions", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const { data: transactions } = await makeHttp(token).get("transactions");
   return {
     props: { transactions },
   };
