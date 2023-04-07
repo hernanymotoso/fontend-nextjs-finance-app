@@ -16,10 +16,11 @@ import {
   SearchPanel,
   Toolbar,
 } from "@devexpress/dx-react-grid-material-ui";
-import { Container, Typography } from "@material-ui/core";
+import { Container, Typography, Button } from "@material-ui/core";
 import { GetServerSideProps, NextPage } from "next";
 import { Transaction } from "../utils/model";
 import { formatCellDate } from "../utils/date.helpers";
+import AddIcon from "@material-ui/icons/Add";
 
 interface TransactionPageProps {
   transactions: Transaction[];
@@ -56,6 +57,15 @@ const TransactionsPage: NextPage<TransactionPageProps> = ({ transactions }) => {
       <Typography component="h1" variant="h4">
         Minhas transações
       </Typography>
+
+      <Button
+        startIcon={<AddIcon />}
+        variant="contained"
+        color="primary"
+        onClick={() => router.push("/transactions/news")}
+      >
+        Criar
+      </Button>
 
       <Grid rows={transactions} columns={columns}>
         <Table />
