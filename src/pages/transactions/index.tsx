@@ -1,5 +1,5 @@
-import { http } from "../utils/http";
-import { Token, validateAuth } from "../utils/auth";
+import { http } from "../../utils/http";
+import { Token, validateAuth } from "../../utils/auth";
 import {
   Column,
   IntegratedFiltering,
@@ -18,9 +18,10 @@ import {
 } from "@devexpress/dx-react-grid-material-ui";
 import { Container, Typography, Button } from "@material-ui/core";
 import { GetServerSideProps, NextPage } from "next";
-import { Transaction } from "../utils/model";
-import { formatCellDate } from "../utils/date.helpers";
+import { Transaction } from "../../utils/model";
+import { formatCellDate } from "../../utils/date.helpers";
 import AddIcon from "@material-ui/icons/Add";
+import { useRouter } from "next/router";
 
 interface TransactionPageProps {
   transactions: Transaction[];
@@ -52,6 +53,8 @@ const columns: Column[] = [
 ];
 
 const TransactionsPage: NextPage<TransactionPageProps> = ({ transactions }) => {
+  const router = useRouter();
+
   return (
     <Container>
       <Typography component="h1" variant="h4">
@@ -62,7 +65,7 @@ const TransactionsPage: NextPage<TransactionPageProps> = ({ transactions }) => {
         startIcon={<AddIcon />}
         variant="contained"
         color="primary"
-        onClick={() => router.push("/transactions/news")}
+        onClick={() => router.push("/transactions/new")}
       >
         Criar
       </Button>
