@@ -16,12 +16,13 @@ import {
   SearchPanel,
   Toolbar,
 } from "@devexpress/dx-react-grid-material-ui";
-import { Container, Typography, Button } from "@material-ui/core";
+import { Typography, Button } from "@material-ui/core";
 import { GetServerSideProps, NextPage } from "next";
 import { Transaction } from "../../utils/model";
 import { formatCellDate } from "../../utils/date.helpers";
 import AddIcon from "@material-ui/icons/Add";
 import { useRouter } from "next/router";
+import { Page } from "../..//components/Page";
 
 interface TransactionPageProps {
   transactions: Transaction[];
@@ -56,7 +57,7 @@ const TransactionsPage: NextPage<TransactionPageProps> = ({ transactions }) => {
   const router = useRouter();
 
   return (
-    <Container>
+    <Page>
       <Typography component="h1" variant="h4">
         Minhas transações
       </Typography>
@@ -84,7 +85,7 @@ const TransactionsPage: NextPage<TransactionPageProps> = ({ transactions }) => {
         <PagingPanel />
         <IntegratedPaging />
       </Grid>
-    </Container>
+    </Page>
   );
 };
 

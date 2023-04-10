@@ -4,7 +4,6 @@ import {
   TransactionTypeLabels,
 } from "../../utils/model";
 import {
-  Container,
   Typography,
   Button,
   TextField,
@@ -16,6 +15,7 @@ import {
 import { NextPage } from "next";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { Page } from "../../components/Page";
 
 const TransactionsNewPage: NextPage = () => {
   const { register, handleSubmit } = useForm();
@@ -32,7 +32,7 @@ const TransactionsNewPage: NextPage = () => {
   }
 
   return (
-    <Container>
+    <Page>
       <Typography component="h1" variant="h4">
         Nova transação
       </Typography>
@@ -113,7 +113,7 @@ const TransactionsNewPage: NextPage = () => {
           </Grid>
         </Grid>
       </form>
-    </Container>
+    </Page>
   );
 };
 
