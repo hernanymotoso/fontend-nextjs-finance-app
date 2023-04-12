@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { SSRKeycloakProvider, SSRCookies } from "@react-keycloak/ssr";
 import { KEYCLOAK_PUBLIC_CONFIG } from "../utils/auth";
 import { parseCookies } from "../utils/cookies";
+import { TenantProvider } from "../components/TenantProvider";
 
 export default function App({
   Component,
@@ -29,10 +30,12 @@ export default function App({
             : null,
       }}
     >
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <TenantProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </TenantProvider>
     </SSRKeycloakProvider>
   );
 }
