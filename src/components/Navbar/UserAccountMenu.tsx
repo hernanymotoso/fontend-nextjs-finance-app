@@ -2,8 +2,11 @@ import * as React from "react";
 import { IconButton, Menu, Divider, MenuItem } from "@material-ui/core";
 import { AccountBox } from "@material-ui/icons";
 import { useRouter } from "next/router";
+import { useKeycloak } from "@react-keycloak/ssr";
+import { KeycloakInstance } from "keycloak-js";
 
 const UserAccountMenu = () => {
+  const { keycloak } = useKeycloak<KeycloakInstance>();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const router = useRouter();
@@ -24,7 +27,9 @@ const UserAccountMenu = () => {
         transformOrigin={{ vertical: "top", horizontal: "center" }}
         getContentAnchorEl={null}
       >
-        <MenuItem disabled={true}>User name</MenuItem>
+        <MenuItem disabled={true}>
+          {(keycloak?.idTokenParsed as any)?.name}
+        </MenuItem>
         <Divider />
         <MenuItem onClick={() => router.push("/logout")}>Logout</MenuItem>
       </Menu>
