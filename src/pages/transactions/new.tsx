@@ -16,22 +16,33 @@ import { NextPage } from "next";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { Page } from "../../components/Page";
+import { useKeycloak } from "@react-keycloak/ssr";
 
 const TransactionsNewPage: NextPage = () => {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
+  const { initialized, keycloak } = useKeycloak();
 
   async function submit(data: any) {
     try {
       await makeHttp().post("transactions", { data });
-      // router.push("/transactions");
+      router.push("/transactions");
     } catch (error) {
       console.log("EERRO", error);
       console.error(error);
     }
   }
 
-  return (
+  if (
+    typeof window !== "undefined" &&
+    initialized &&
+    !keycloak?.authenticated
+  ) {
+    router.replace(`/login?from=${window!.location.pathname}`);
+    return null;
+  }
+
+  return keycloak?.authenticated ? (
     <Page>
       <Typography component="h1" variant="h4">
         Nova transação
@@ -114,7 +125,7 @@ const TransactionsNewPage: NextPage = () => {
         </Grid>
       </form>
     </Page>
-  );
+  ) : null;
 };
 
 export default TransactionsNewPage;

@@ -1,5 +1,4 @@
 import makeHttp from "../../utils/http";
-import { Token, validateAuth } from "../../utils/auth";
 import {
   Column,
   IntegratedFiltering,
@@ -23,6 +22,7 @@ import { formatCellDate } from "../../utils/date.helpers";
 import AddIcon from "@material-ui/icons/Add";
 import { useRouter } from "next/router";
 import { Page } from "../..//components/Page";
+import { withAuth } from "../../hof/withAuth";
 
 interface TransactionPageProps {
   transactions: Transaction[];
@@ -91,19 +91,12 @@ const TransactionsPage: NextPage<TransactionPageProps> = ({ transactions }) => {
 
 export default TransactionsPage;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const auth = validateAuth(ctx.req);
-  if (!auth) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/login",
-      },
-    };
-  }
-  const token = (auth as Token).token;
+export const getServerSideProps = withAuth(async (ctx, { token }) => {
   const { data: transactions } = await makeHttp(token).get("transactions");
+
   return {
-    props: { transactions },
+    props: {
+      transactions,
+    },
   };
-};
+});
